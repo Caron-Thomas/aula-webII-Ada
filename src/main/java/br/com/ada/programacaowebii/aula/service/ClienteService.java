@@ -69,7 +69,9 @@ public class ClienteService {
     }
 
     public List<Cliente> listarClientesPorPeriodo(LocalDate dataInicial, LocalDate dataFinal) {
-        return this.clienteRepository.findByDataNascimentoBetween(dataInicial, dataFinal);
+        //return this.clienteRepository.findByDataNascimentoBetween(dataInicial, dataFinal);
+        //return this.clienteRepository.buscarClienteEntreDatasNascimentoParametroIndexado(dataInicial, dataFinal);
+        return this.clienteRepository.buscarClienteEntreDatasNascimentoNominal(dataInicial, dataFinal);
     }
 
     public Optional<Cliente> buscarClientePorCpf(String cpf) {

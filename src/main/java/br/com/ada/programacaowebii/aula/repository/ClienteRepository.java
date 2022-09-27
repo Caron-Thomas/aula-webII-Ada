@@ -24,10 +24,19 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     public void deleteByCpf(String cpf);
 
     //neste caso o Cliente é a Entidade e nao o nome da tabela no banco de dados
-    @Query("SELECT c FROM Cliente c WHERE c.cpf = ?1")
+    @Query("SELECT c FROM Cliente c WHERE c.cpf = ?1") // depois do "FROM" é pelo nome da classe, não da tabela.
     public Optional<Cliente> buscarClientePorCpfParametroIndexado(String cpf);
+    //Pela forma indexado, vc manda pela ordem de parametros. Ex.: ?0 -> depois ?1 e assim por diante. Como o
+    // cpf é o 2° parametro da tabela, então é ?1 (0, 1, 2, )
 
     @Query("SELECT c FROM Cliente c WHERE c.cpf = :cpf")
     public Optional<Cliente> buscarClientePorCpfParametroNominal(@Param("cpf") String cpf);
+
+    @Query("SELECT c FROM Cliente c WHERE c.dataNascimento BETWEEN ?1 AND ?2")
+    public List<Cliente> buscarClienteEntreDatasNascimentoParametroIndexado(LocalDate dataInicial, LocalDate dataFinal);
+
+    @Query("SELECT c FROM Cliente c WHERE c.dataNascimento BETWEEN :dataInicial AND :dataFinal")
+    public List<Cliente> buscarClienteEntreDatasNascimentoNominal(@Param("dataInicial") LocalDate dataInicial,
+                                                                  @Param("dataFinal") LocalDate dataFinal);
 
 }
